@@ -1,5 +1,5 @@
 PERK.PrintName = "Sin Crusher"
-PERK.Description = "Elites killed release a healing cloud. Healing gives Berserk. \nBerserk increases your damage by {1}. \nGain Warden Aura, giving you and nearby players +{2} damage block."
+PERK.Description = "Killing Elites releases a healing cloud at your feet. Healing gives Berserk. \nBerserk increases your damage by {1}. \nGain Warden Aura, giving you and nearby players +{2} damage block."
 PERK.Icon = "materials/perks/reverend/sin_crusher.png"
 PERK.Params = {
     [1] = {value = 0.2, percent = true},
@@ -25,7 +25,7 @@ PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, inflictor)
     if inflictor:IsNPC() then return end -- Prevent infinite chains
     if victim:GetVar("is_elite") then
         local ent = ents.Create("arccw_thr_medicgrenade")
-        ent:SetPos(victim:GetPos())
+        ent:SetPos(killer:GetPos())
         ent:SetOwner(killer)
         ent.Owner = killer
         ent.Inflictor = victim

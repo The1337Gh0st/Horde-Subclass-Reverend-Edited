@@ -1,5 +1,5 @@
 PERK.PrintName = "Lazarus Gift"
-PERK.Description = "Regenerate up to 10 armor. \nHeadshots leech up to {2} health. \nHealing gives Haste, increasing speed by {1}."
+PERK.Description = "+{2} armor on kill. \nHeadshots leech up to {2} health. \nHealing gives Haste, increasing speed by {1}."
 PERK.Icon = "materials/perks/reverend/lazarus_gift.png"
 PERK.Params = {
     [1] = {value = 0.15, percent = true},
@@ -8,18 +8,27 @@ PERK.Params = {
 
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
-    if SERVER and perk == "lazarus_gift" then
-        ply:Horde_SetArmorRegenEnabled(true)
-		ply:Horde_SetArmorRegenMax(10)
-    end
-end
+--PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
+   -- if SERVER and perk == "lazarus_gift" then
+    --    ply:Horde_SetArmorRegenEnabled(true)
+	--	ply:Horde_SetArmorRegenMax(10)
+   -- end
+--end
 
-PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
-    if SERVER and perk == "lazarus_gift" then
-        ply:Horde_SetArmorRegenEnabled(nil)
-		ply:Horde_SetArmorRegenMax(0)
-    end
+--PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
+   -- if SERVER and perk == "lazarus_gift" then
+   --     ply:Horde_SetArmorRegenEnabled(nil)
+	--	ply:Horde_SetArmorRegenMax(0)
+  --  end
+--end
+
+PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
+    if not killer:Horde_GetPerk("lazarus_gift")  then return end
+    killer:SetArmor(killer:Armor() + 2)
+    
+	if killer:Armor() >= killer:GetMaxArmor() then
+	killer:SetArmor(killer:GetMaxArmor())
+	end
 end
 
 
@@ -38,7 +47,3 @@ PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmgin
         ply:Horde_AddHaste(healer:Horde_GetApplyBuffDuration())
     end
 end
-
-	
-	
-	
