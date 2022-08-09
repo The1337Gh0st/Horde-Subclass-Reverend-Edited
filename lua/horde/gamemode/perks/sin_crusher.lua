@@ -1,9 +1,10 @@
 PERK.PrintName = "Sin Crusher"
-PERK.Description = "Killing Elites releases a healing cloud at your feet. Healing gives Berserk. \nBerserk increases your damage by {1}. \nGain Warden Aura, giving you and nearby players +{2} damage block."
+PERK.Description = "Killing Elites releases a healing cloud at your feet. Healing gives Berserk. \nBerserk increases your damage by {1} got {3} seconds. \nGain Warden Aura, giving you and nearby players +{2} damage block."
 PERK.Icon = "materials/perks/reverend/sin_crusher.png"
 PERK.Params = {
     [1] = {value = 0.2, percent = true},
 	[2] = {value = 2},
+	[3] = {value = 5},
 }
 
 PERK.Hooks = {}
