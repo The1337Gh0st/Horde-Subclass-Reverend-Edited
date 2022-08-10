@@ -10,7 +10,7 @@ Kills will heal you and nearby players for {5} health. ]]
 -- These are used to fill out the {1}, {2}, {3}, {4} above.
 -- Mainly useful for translation, it is optional.
 PERK.Params = {
-    [1] = {percent = true, base = 0, level = 0.1, max = 0.25, classname = "Reverend"},
+    [1] = {percent = true, base = 0, level = 0.01, max = 0.25, classname = "Reverend"},
     [2] = {value = 0, percent = true},
     [3] = {value = 0.01, percent = true},
     [4] = {value = 0.25, percent = true},
