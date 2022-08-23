@@ -14,6 +14,13 @@ PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     end
 end
 
+PERK.Hooks.Horde_OnPlayerDebuffApply = function (ply, debuff, bonus)
+    if ply:Horde_GetPerk("iron_faith") and ply:Armor() >= 5 and debuff == HORDE.Status_Ignite then
+        bonus.apply = 0
+        return true
+    end
+end
+
 PERK.Hooks.Horde_OnPlayerHeal = function(ply, healinfo)
     local healer = healinfo:GetHealer()
     if healer:IsPlayer() and healer:Horde_GetPerk("iron_faith") then
