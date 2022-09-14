@@ -1,5 +1,5 @@
 PERK.PrintName = "Lazarus Gift"
-PERK.Description = "+{2} armor on kill. Does not apply if you have at least {3} armor. \nHeadshots leech up to {2} health. \nHealing gives Haste, increasing speed by {1} for {4} seconds."
+PERK.Description = "Headshots leech up to {2} health. \nHealing gives Haste, increasing speed by {1} for {4} seconds."
 PERK.Icon = "materials/perks/reverend/lazarus_gift.png"
 PERK.Params = {
     [1] = {value = 0.15, percent = true},
@@ -23,16 +23,6 @@ PERK.Hooks = {}
 	--	ply:Horde_SetArmorRegenMax(0)
   --  end
 --end
-
-PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
-    if not killer:Horde_GetPerk("lazarus_gift")  then return end
-	if killer:Armor() >= 10 then return end
-    killer:SetArmor(killer:Armor() + 2)
-    
-	--if killer:Armor() >= killer:GetMaxArmor() then
-	--killer:SetArmor(killer:GetMaxArmor())
-	--end
-end
 
 
 PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmginfo)
