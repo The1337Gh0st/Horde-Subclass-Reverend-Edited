@@ -31,6 +31,8 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         ply:Horde_SetApplyBuffDuration(ply:Horde_GetApplyBuffDuration() * 1.5)
 		ply:Horde_SetEnableWardenAuraBuffBonus(true)
         ply:Horde_SetWardenAuraRadius(ply:Horde_GetWardenAuraRadius() * 1.5)
+		ply:Horde_SetApplyDebuffMore(1)
+        ply:Horde_SetApplyDebuffDuration(ply:Horde_GetApplyDebuffDuration() * 2)
     end
 end
 
@@ -40,6 +42,8 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
         ply:Horde_SetApplyBuffDuration(ply:Horde_GetApplyBuffDuration() / 1.5)
 		ply:Horde_SetEnableWardenAuraBuffBonus(nil)
         ply:Horde_SetWardenAuraRadius(ply:Horde_GetWardenAuraRadius() / 1.5)
+		ply:Horde_SetApplyDebuffMore(0)
+        ply:Horde_SetApplyDebuffDuration(ply:Horde_GetApplyDebuffDuration() / 2)
         if ply:Horde_GetPerk("sin_crusher") then
             ply:Horde_AddWardenAura()
         else

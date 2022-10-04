@@ -1,5 +1,5 @@
 PERK.PrintName = "Executor"
-PERK.Description = "Enemies you hit with Ballistic damage are inflicted with Weakened, \ntaking {1} more damage. \nDeal {2} more ballistic damage against Elites."
+PERK.Description = "Enemies you hit with Ballistic damage are inflicted with Weakened, \ntaking {1} more physical damage. \nDeal {2} more ballistic damage against Elites."
 PERK.Icon = "materials/perks/reverend/executor.png"
 PERK.Params = {
     [1] = {value = 0.15, percent = true},
