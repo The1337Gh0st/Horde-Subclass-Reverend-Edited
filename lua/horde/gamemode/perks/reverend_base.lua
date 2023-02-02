@@ -35,8 +35,8 @@ end
 
 PERK.Hooks.Horde_OnPlayerHeal = function(ply, healinfo)
     local healer = healinfo:GetHealer()
-	local r = healer:Horde_GetPerkLevelBonus("reverend_base")
     if healer:IsPlayer() and healer:Horde_GetPerk("reverend_base") then
+	local r = healer:Horde_GetPerkLevelBonus("reverend_base")
         healinfo:SetHealAmount(healinfo:GetHealAmount() * ((r * 4) + 1))
 --	 healinfo:SetHealAmount(healinfo:GetHealAmount() * 1.5)
 		healinfo:SetOverHealPercentage(r)
