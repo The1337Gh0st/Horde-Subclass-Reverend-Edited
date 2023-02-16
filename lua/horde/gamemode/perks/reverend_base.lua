@@ -12,7 +12,7 @@ PERK.Params = {
     [1] = {percent = true, base = 1, level = 0.08, max = 3, classname = "Reverend"},
     [2] = {value = 1, percent = true},
     [3] = {value = 0.08, percent = true},
-    [4] = {value = 0.3, percent = true},
+    [4] = {value = 3, percent = true},
 	[5] = {value = 2},
 	[6] = {percent = true, base = 0, level = 0.04, max = 1, classname = "Reverend"},
 	[7] = {value = 0.04, percent = true},
