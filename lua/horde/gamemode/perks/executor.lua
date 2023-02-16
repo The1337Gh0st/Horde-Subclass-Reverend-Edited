@@ -1,18 +1,26 @@
 PERK.PrintName = "Executor"
-PERK.Description = "Enemies you hit with Ballistic damage are inflicted with Weakened, \ntaking {1} more physical damage. \nDeal {2} more ballistic damage against Elites."
+PERK.Description = "Deal {1} more ballistic damage against targets with less than {3} health. \nDeal {2} more ballistic damage against Elites."
 PERK.Icon = "materials/perks/reverend/executor.png"
 PERK.Params = {
-    [1] = {value = 0.15, percent = true},
-	[2] = {value = 0.25, percent = true},
+    [1] = {value = 0.2, percent = true},
+	[2] = {value = 0.15, percent = true},
+	[3] = {value = 0.5, percent = true},
 }
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamage = function(ply, npc, bonus, hitgroup, dmg)
     if not ply:Horde_GetPerk("executor") then return end
+	
+	local half = npc:GetMaxHealth() * 0.5
+	
     if HORDE:IsBallisticDamage(dmg) then
-        npc:Horde_AddWeaken(ply:Horde_GetApplyDebuffDuration(), ply:Horde_GetApplyDebuffMore())
+	
+	if npc:Health() <= half then
+	bonus.increase = bonus.increase + 0.2
+	end
+	
 		if npc:GetVar("is_elite") then
-            bonus.increase = bonus.increase + 0.25
+            bonus.increase = bonus.increase + 0.15
         end
     end
 end

@@ -13,6 +13,7 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
 	
 	if HORDE:IsBallisticDamage(dmginfo) and hitgroup == HITGROUP_HEAD then
             bonus.increase = bonus.increase + 0.25
+			npc:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, dmginfo:GetDamage() * 0.3, ply, dmginfo:GetDamagePosition())
         end
        
 	   if npc:Horde_HasMutation("decay") and HORDE:IsBallisticDamage(dmginfo) then
@@ -25,8 +26,4 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
             npc.Horde_Mutation_Regenerator = nil
         end
 		
-	
-    if HORDE:IsBallisticDamage(dmginfo) and hitgroup == HITGROUP_HEAD then
-        npc:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, dmginfo:GetDamage() * 0.3, ply, dmginfo:GetDamagePosition())
-    end
 end

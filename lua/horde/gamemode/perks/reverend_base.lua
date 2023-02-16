@@ -1,19 +1,18 @@
 PERK.PrintName = "Reverend Base"
 PERK.Description = [[
-The Reverend subclass is a hybrid subclass that can provide support for teammates or utilize high damage skills.
+The Reverend subclass is a hybrid subclass that can basic provide support for teammates or utilize high damage skills.
 Complexity: MEDIUM
 
-{6} healing amplification. ({2} + {7} per level, up to {8})
-{1} increased overheal. ({2} + {3} per level, up to {4})
+{1} of healing reduces debuff buildup. ({2} base, {3} per level, up to {4})
 Kills will heal you and nearby players for {5} health. ]]
 
 -- These are used to fill out the {1}, {2}, {3}, {4} above.
 -- Mainly useful for translation, it is optional.
 PERK.Params = {
-    [1] = {percent = true, base = 0, level = 0.01, max = 0.25, classname = "Reverend"},
-    [2] = {value = 0, percent = true},
-    [3] = {value = 0.01, percent = true},
-    [4] = {value = 0.25, percent = true},
+    [1] = {percent = true, base = 1, level = 0.08, max = 3, classname = "Reverend"},
+    [2] = {value = 1, percent = true},
+    [3] = {value = 0.08, percent = true},
+    [4] = {value = 0.3, percent = true},
 	[5] = {value = 2},
 	[6] = {percent = true, base = 0, level = 0.04, max = 1, classname = "Reverend"},
 	[7] = {value = 0.04, percent = true},
@@ -29,27 +28,19 @@ PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)
     end
 end
 
-
-
 -- Apply the healing bonus.
 
-PERK.Hooks.Horde_OnPlayerHeal = function(ply, healinfo)
+PERK.Hooks.Horde_PostOnPlayerHeal = function(ply, healinfo)
     local healer = healinfo:GetHealer()
     if healer:IsPlayer() and healer:Horde_GetPerk("reverend_base") then
 	local r = healer:Horde_GetPerkLevelBonus("reverend_base")
-        healinfo:SetHealAmount(healinfo:GetHealAmount() * ((r * 4) + 1))
---	 healinfo:SetHealAmount(healinfo:GetHealAmount() * 1.5)
-		healinfo:SetOverHealPercentage(r)
+        for debuff, buildup in pairs(ply.Horde_Debuff_Buildup) do
+            if debuff == HORDE.Status_Bleeding or debuff == HORDE.Status_Break or debuff == HORDE.Status_Necrosis or debuff == HORDE.Status_Ignite or debuff == HORDE.Status_Frostbite or debuff == HORDE.Status_Shock then
+                ply:Horde_ReduceDebuffBuildup(debuff, healinfo:GetHealAmount() * (1 + ( r * 0.08)))
+            end
+        end
     end
 end
-
-
---PERK.Hooks.Horde_OnPlayerHeal = function(ply, healinfo)
-  --  local healer = healinfo:GetHealer()
-  --  if healer:IsPlayer() and healer:Horde_GetPerk("reverend_base") then
-   --     healinfo:SetOverHealPercentage(ply:Horde_GetPerkLevelBonus("Reverend"))
-  --  end
---end
 
 -- Apply the passive ability.
 
@@ -58,7 +49,7 @@ PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
    -- HORDE:SelfHeal(killer, killer:GetMaxHealth() * 0.02)
 	for _, ent in pairs(ents.FindInSphere(killer:GetPos(), 250)) do
         if ent:IsPlayer() then
-            local healinfo = HealInfo:New({amount=2, healer=killer})
+            local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.02, healer=killer})
             HORDE:OnPlayerHeal(ent, healinfo)
     end
 end

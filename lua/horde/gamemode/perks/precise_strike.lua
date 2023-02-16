@@ -1,5 +1,5 @@
 PERK.PrintName = "Precise Strike"
-PERK.Description = "Increases Ballistic damage based on distance, \nincreasing by {1} damage for each {2} units. Increase caps at {3}. \n Headshots build up Stun. Stun lasts for {4} seconds with a {5} second cooldown."
+PERK.Description = "Increases Ballistic damage based on distance, \nincreasing by {1} damage for each {2} units. Increase caps at {3}. \nHeadshots build up Stun. Stun lasts for {4} seconds with a {5} second cooldown."
 PERK.Icon = "materials/perks/reverend/precise_strike.png"
 PERK.Params = {
     [1] = {value = 0.05, percent = true},
@@ -32,6 +32,6 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
         end
     end
 	if hitgroup == HITGROUP_HEAD and HORDE:IsBallisticDamage(dmginfo) then
-        npc:Horde_AddStun(dmginfo:GetDamage())
+        npc:Horde_AddDebuffBuildup(HORDE.Status_Stun, dmginfo:GetDamage() / 3, attacker, npc:GetPos())
     end
 end
