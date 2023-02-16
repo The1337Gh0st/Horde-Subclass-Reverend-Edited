@@ -3,7 +3,7 @@ PERK.Description = "Ballistic damage headshots leech {2} of your max health. \nG
 PERK.Icon = "materials/perks/reverend/lazarus_gift.png"
 PERK.Params = {
     [1] = {value = 0.2, percent = true},
-    [2] = {value = 1},
+    [2] = {value = 0.01, percent = true},
 	[3] = {value = 10},
 	[4] = {value = 5},
 }
