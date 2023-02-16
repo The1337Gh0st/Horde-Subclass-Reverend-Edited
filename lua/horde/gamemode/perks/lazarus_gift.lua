@@ -28,7 +28,7 @@ PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmginfo)
     if ply:Horde_GetPerk("lazarus_gift") and (HORDE:IsBallisticDamage(dmginfo)) and hitgroup == HITGROUP_HEAD then
         local leech = math.min(1, dmginfo:GetDamage() * 1)
-        HORDE:SelfHeal(ply, leech)
+        HORDE:SelfHeal(ply, ply:GetMaxHealth() * 0.01)
 		end
     end
 
