@@ -1,10 +1,10 @@
 PERK.PrintName = "Apostolic Guiding"
-PERK.Description = "Gain {1} healing amplification per missing health, up to {2}. \nPress Shift + E to release a healing pulse that heals nearby players for {3} health. \n{4} second cooldown."
+PERK.Description = "Gain {1} healing amplification per missing health, up to {2}. \nPress Shift + E to release a healing pulse \nthat heals nearby players for {3} of their max health. {4} second cooldown."
 PERK.Icon = "materials/perks/reverend/apostolic_guiding.png"
 PERK.Params = {
 [1] = {value = 0.01, percent = true},
 [2] = {value = 1, percent = true},
-[3] = {value = 10},
+[3] = {value = 10, percent = true},
 [4] = {value = 10},
 }
 
@@ -54,7 +54,7 @@ if not ply:Horde_GetPerk("apostolic_guiding") then return end
 
     for _, ent in pairs(ents.FindInSphere(ply:GetPos(), 200)) do
         if ent:IsPlayer() then
-            local healinfo = HealInfo:New({amount=10, healer=ply})
+            local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.1, healer=ply})
             HORDE:OnPlayerHeal(ent, healinfo)
         elseif ent:GetClass() == "npc_vj_horde_antlion" then
             local healinfo = HealInfo:New({amount=10, healer=ply})

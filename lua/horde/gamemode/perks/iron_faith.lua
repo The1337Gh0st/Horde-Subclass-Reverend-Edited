@@ -1,5 +1,5 @@
 PERK.PrintName = "Iron Faith"
-PERK.Description = "+{3} armor on kill, up to {4}. \nWhile you have at least {1} armor: Immune to Fire and Blast damage, \nand +{3} block."
+PERK.Description = "+{3} armor on kill, up to {4}. \nWhile you have at least {1} armor: \nGain immunity to Fire and Blast damage, and +{3} block."
 PERK.Icon = "materials/perks/reverend/iron_faith.png"
 PERK.Params = {
     [1] = {value = 5},
