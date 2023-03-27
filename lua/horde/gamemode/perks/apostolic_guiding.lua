@@ -4,7 +4,7 @@ PERK.Icon = "materials/perks/reverend/apostolic_guiding.png"
 PERK.Params = {
 [1] = {value = 0.01, percent = true},
 [2] = {value = 1, percent = true},
-[3] = {value = 10, percent = true},
+[3] = {value = 0.1, percent = true},
 [4] = {value = 10},
 }
 
