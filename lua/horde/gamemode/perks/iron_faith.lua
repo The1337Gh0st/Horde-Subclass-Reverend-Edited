@@ -10,7 +10,7 @@ PERK.Params = {
 
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
+PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
  if not killer:Horde_GetPerk("iron_faith") then return end
  if killer:Armor() >= 10 then return end
 	killer:SetArmor(math.min(10,killer:Armor()+2))

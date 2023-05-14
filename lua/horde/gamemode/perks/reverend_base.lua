@@ -4,15 +4,15 @@ The Reverend subclass is a hybrid subclass that can basic provide support for te
 Complexity: MEDIUM
 
 {1} of healing reduces debuff buildup. ({2} base, {3} per level, up to {4})
-Kills will heal you and nearby players for {5} health. ]]
+Kills will heal you and nearby players for {5} of their max health. ]]
 
 -- These are used to fill out the {1}, {2}, {3}, {4} above.
 -- Mainly useful for translation, it is optional.
 PERK.Params = {
-    [1] = {percent = true, base = 1, level = 0.08, max = 3, classname = "Reverend"},
-    [2] = {value = 1, percent = true},
-    [3] = {value = 0.08, percent = true},
-    [4] = {value = 3, percent = true},
+    [1] = {percent = true, base = 0.25, level = 0.03, max = 1, classname = "Reverend"},
+    [2] = {value = 0.25, percent = true},
+    [3] = {value = 0.03, percent = true},
+    [4] = {value = 1, percent = true},
 	[5] = {value = 2},
 	[6] = {percent = true, base = 0, level = 0.04, max = 1, classname = "Reverend"},
 	[7] = {value = 0.04, percent = true},
@@ -36,7 +36,7 @@ PERK.Hooks.Horde_PostOnPlayerHeal = function(ply, healinfo)
 	local r = healer:Horde_GetPerkLevelBonus("reverend_base")
         for debuff, buildup in pairs(ply.Horde_Debuff_Buildup) do
             if debuff == HORDE.Status_Bleeding or debuff == HORDE.Status_Break or debuff == HORDE.Status_Necrosis or debuff == HORDE.Status_Ignite or debuff == HORDE.Status_Frostbite or debuff == HORDE.Status_Shock then
-                ply:Horde_ReduceDebuffBuildup(debuff, healinfo:GetHealAmount() * (1 + ( r * 0.08)))
+                ply:Horde_ReduceDebuffBuildup(debuff, healinfo:GetHealAmount() * (0.25 + ( r * 3)))
             end
         end
     end

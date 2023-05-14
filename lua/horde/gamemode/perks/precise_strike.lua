@@ -32,6 +32,6 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
         end
     end
 	if hitgroup == HITGROUP_HEAD and HORDE:IsBallisticDamage(dmginfo) then
-        npc:Horde_AddDebuffBuildup(HORDE.Status_Stun, dmginfo:GetDamage() / 3, attacker, npc:GetPos())
+        npc:Horde_AddDebuffBuildup(HORDE.Status_Stun, dmginfo:GetDamage() / 3, ply, npc:GetPos())
     end
 end
