@@ -44,15 +44,15 @@ end
 
 -- Apply the passive ability.
 
-PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
+PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if not killer:Horde_GetPerk("reverend_base")  then return end
    -- HORDE:SelfHeal(killer, killer:GetMaxHealth() * 0.02)
 	for _, ent in pairs(ents.FindInSphere(killer:GetPos(), 250)) do
         if ent:IsPlayer() then
             local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.02, healer=killer})
             HORDE:OnPlayerHeal(ent, healinfo)
-    end
-end
+		end
+	end
 end
 
 

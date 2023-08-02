@@ -16,18 +16,18 @@ PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     end
 end
 
-PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
+PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if not killer:Horde_GetPerk("sin_crusher") then return end
 	if not victim:GetVar("is_elite") then return end
 
 
     for _, ent in pairs(ents.FindInSphere(killer:GetPos(), 250)) do
         if ent:IsPlayer() then
-		for debuff, buildup in pairs(ent.Horde_Debuff_Buildup) do
-		ent:Horde_RemoveDebuff(debuff)
-        ent:Horde_ReduceDebuffBuildup(debuff, buildup)
-		end
-		local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.05, healer=killer})
+			for debuff, buildup in pairs(ent.Horde_Debuff_Buildup) do
+				ent:Horde_RemoveDebuff(debuff)
+				ent:Horde_ReduceDebuffBuildup(debuff, buildup)
+			end
+			local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.05, healer=killer})
             HORDE:OnPlayerHeal(ent, healinfo)
         end
     end
