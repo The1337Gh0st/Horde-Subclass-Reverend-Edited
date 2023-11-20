@@ -1,5 +1,5 @@
 PERK.PrintName = "Apostolic Guiding"
-PERK.Description = "Healing players gives barrier equal to twice the amount healed. \nOnly half as effective on yourself. \nRegenerate {3} health per second."
+PERK.Description = "Healing players gives barrier equal to the amount healed. \nRegenerate {3} health per second."
 PERK.Icon = "materials/perks/reverend/apostolic_guiding.png"
 PERK.Params = {
 [1] = {value = 0.5, percent = true},
@@ -21,7 +21,7 @@ PERK.Hooks.Horde_OnPlayerHeal = function(ply, healinfo)
        if healer == ply then
 	   ply:Horde_AddBarrierStack(healinfo:GetHealAmount()) 
 	   else
-	   ply:Horde_AddBarrierStack(healinfo:GetHealAmount() * 2) 
+	   ply:Horde_AddBarrierStack(healinfo:GetHealAmount()) 
 	   end
     end
 end

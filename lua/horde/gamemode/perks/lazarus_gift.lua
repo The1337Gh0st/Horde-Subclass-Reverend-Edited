@@ -1,10 +1,10 @@
 PERK.PrintName = "Lazarus Gift"
-PERK.Description = "Ballistic damage headshots leech {2} of your max health. \nGain {1} speed while at full health."
+PERK.Description = "Ballistic damage headshots leech {2} max health for yourself and nearby players. \nIncrease speed by {1} while at full health."
 PERK.Icon = "materials/perks/reverend/lazarus_gift.png"
 PERK.Params = {
     [1] = {value = 0.25, percent = true},
     [2] = {value = 0.02, percent = true},
-	[3] = {value = 10},
+	[3] = {value = 0.01, percent = true},
 	[4] = {value = 5},
 }
 
@@ -27,7 +27,14 @@ PERK.Hooks = {}
 
 PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmginfo)
     if ply:Horde_GetPerk("lazarus_gift") and HORDE:IsBallisticDamage(dmginfo) and hitgroup == HITGROUP_HEAD then
-        HORDE:SelfHeal(ply, ply:GetMaxHealth() * 0.02)
+		for _, ent in pairs(ents.FindInSphere(ply:GetPos(), 250)) do
+        if ent:IsValid() and ent:IsPlayer() and ent:Alive() and ent == ply then
+		HORDE:SelfHeal(ply, ply:GetMaxHealth() * 0.02)
+			elseif ent:IsPlayer() and ent:Alive() and ent ~= ply then
+			local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.02, healer=ply})
+            HORDE:OnPlayerHeal(ent, healinfo)
+		end
+	end
 		end
     end
 
