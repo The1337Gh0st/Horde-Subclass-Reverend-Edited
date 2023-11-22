@@ -4,7 +4,7 @@ PERK.Icon = "materials/perks/reverend/sin_crusher.png"
 PERK.Params = {
     [1] = {value = 0.2, percent = true},
 	[2] = {value = 1, percent = true},
-	[3] = {value = 0.03, percent = true},
+	[3] = {value = 0.05, percent = true},
 }
 
 PERK.Hooks = {}
@@ -44,7 +44,7 @@ PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
 
     for _, ent in pairs(ents.FindInSphere(killer:GetPos(), 250)) do
         if ent:IsValid() and ent:IsPlayer() and ent:Alive() then
-			local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.03, healer=killer})
+			local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.05, healer=killer})
             HORDE:OnPlayerHeal(ent, healinfo)		
         end
     end

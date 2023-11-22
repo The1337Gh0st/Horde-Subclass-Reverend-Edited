@@ -14,7 +14,7 @@ PERK.Params = {
     [2] = {value = 0.25, percent = true},
     [3] = {value = 0.01, percent = true},
     [4] = {value = 0.5, percent = true},
-	[5] = {value = 0.02, percent = true},
+	[5] = {value = 0.05, percent = true},
 	[6] = {percent = true, base = 0, level = 0.04, max = 1, classname = "Reverend"},
 	[7] = {value = 0.04, percent = true},
 	[8] = {value = 1, percent = true},
@@ -50,7 +50,7 @@ PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
    -- HORDE:SelfHeal(killer, killer:GetMaxHealth() * 0.02)
 	for _, ent in pairs(ents.FindInSphere(killer:GetPos(), 250)) do
         if ent:IsValid() and ent:IsPlayer() and ent:Alive() then
-            local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.02, healer=killer})
+            local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.05, healer=killer})
             HORDE:OnPlayerHeal(ent, healinfo)
 		end
 	end
