@@ -29,25 +29,10 @@ PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)
     end
 end
 
--- Apply the healing bonus.
-
---PERK.Hooks.Horde_PostOnPlayerHeal = function(ply, healinfo)
-   -- local healer = healinfo:GetHealer()
-   -- if healer:IsPlayer() and healer:Horde_GetPerk("reverend_base") then
-	--local r = healer:Horde_GetPerkLevelBonus("reverend_base")
-     --   for debuff, buildup in pairs(ply.Horde_Debuff_Buildup) do
-      --      if debuff == HORDE.Status_Bleeding or debuff == HORDE.Status_Break or debuff == HORDE.Status_Necrosis or debuff == HORDE.Status_Ignite or debuff == HORDE.Status_Frostbite or debuff == HORDE.Status_Shock then
-       --         ply:Horde_ReduceDebuffBuildup(debuff, healinfo:GetHealAmount() * (0.25 + ( r * 3)))
-      --      end
-     --   end
-   -- end
---end
-
 -- Apply the passive ability.
 
 PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if not killer:Horde_GetPerk("reverend_base")  then return end
-   -- HORDE:SelfHeal(killer, killer:GetMaxHealth() * 0.02)
 	for _, ent in pairs(ents.FindInSphere(killer:GetPos(), 250)) do
         if ent:IsValid() and ent:IsPlayer() and ent:Alive() then
             local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.05, healer=killer})
@@ -61,34 +46,48 @@ PERK.Hooks.Horde_OnPlayerDebuffApply = function (ply, debuff, bonus, inflictor)
         bonus.less = bonus.less * (0.75 - ply:Horde_GetPerkLevelBonus("reverend_base"))
 end
 
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
+    if SERVER and perk == "reverend_base" then
+        ply:Horde_AddReverendAura()
+    end
+end
 
---PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
-  --  if SERVER and perk == "reverend_base" then
-  --     ply:Horde_SetMindRegenTick(0.25)
-   --     ply:SetMaxArmor(0)
-	--	ply:Horde_SetMaxMind(100)
-	--	ply:Horde_SetMind(100)
-   -- end
---end
-
---PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
-   -- if SERVER and perk == "reverend_base" then
-     --   ply:Horde_SetMaxMind(0)
-      --  ply:Horde_SetMind(0)
-     --   ply:Horde_SetMindRegenTick(0)
-    --    ply:SetMaxArmor(100)
-   -- end
---end
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
+    if SERVER and perk == "reverend_base" then
+        ply:Horde_RemoveReverendAura()
+    end
+end
 
 
+local entmeta = FindMetaTable("Entity")
+local plymeta = FindMetaTable("Player")
 
---PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
-   -- if not killer:Horde_GetPerk("reverend_base") then return end
+function entmeta:Horde_AddReverendAura()
+    self:Horde_RemoveReverendAura()
+    local ent = ents.Create("horde_reverend_aura")
+    ent:SetPos(self:GetPos())
+    ent:SetParent(self)
+    ent:Spawn()
+    self.Horde_ReverendAura = ent
+end
 
-  --  for _, ent in pairs(ents.FindInSphere(killer:GetPos(), 250)) do
-   --     if ent:IsPlayer() then
-    --        local healinfo = HealInfo:New({amount=2, healer=killer})
-    --        HORDE:OnPlayerHeal(ent, healinfo)
-    --    end
-   -- end
---end
+function entmeta:Horde_RemoveReverendAura()
+    if not self:IsValid() then return end
+    if self.Horde_ReverendAura and self.Horde_ReverendAura:IsValid() then
+        self.Horde_ReverendAura:OnRemove()
+        self.Horde_ReverendAura:Remove()
+        self.Horde_ReverendAura = nil
+    end
+end
+
+function plymeta:Horde_SetReverendAuraRadius(radius)
+    self.Horde_ReverendAuraRadius = radius
+end
+
+function plymeta:Horde_GetReverendAuraRadius()
+    return (self.Horde_ReverendAuraRadius or 250)
+end
+
+hook.Add("DoPlayerDeath", "Horde_ReverendAuraDoPlayerDeath", function(victim)
+    victim:Horde_RemoveReverendAura()
+end)
