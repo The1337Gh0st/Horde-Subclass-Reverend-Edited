@@ -10,10 +10,10 @@ local OpacityConvar = CreateClientConVar("horde_reverend_aura_ring_opacity",
 )
 
 local opacity = OpacityConvar:GetInt()
-local col = Color(0,255,100,opacity)
+local col = Color(255,0,0,opacity)
 cvars.AddChangeCallback("horde_reverend_aura_ring_opacity", function( convar_name, oldValue, newValue ) 
 	opacity = tonumber(newValue)
-	col = Color(0,255,100,opacity)
+	col = Color(255,0,0,opacity)
 end)
 
 local auras = auras or {}
