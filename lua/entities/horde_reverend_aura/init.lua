@@ -12,7 +12,7 @@ end
 function ENT:Initialize()
     self:PhysicsInitSphere(250)
     self:SetCollisionBounds(Vector(-250, -250, -250), Vector(250, 250, 250))
-    self:SetSolid(SOLID_VPHYSICS)
+    self:SetSolid(SOLID_NONE)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
     self:SetTrigger(true)
